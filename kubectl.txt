@@ -1,0 +1,20 @@
+### To deploy pods
+
+Kubectl run name --image {Image_name}
+
+### see your pods
+
+kubectl get pods
+kubectl create -f {file_name.yml}
+kubectl describe pod {podname}
+kubectl delete pod {podname}
+kubectl apply -f {file_name.yml} . ## update a pod created using a yml file.
+
+kubectl get replicaset
+kubectl scale --replicas=X -f {filename.yml}
+kubectl scale replicaset {rs_name} --replicas=X
+kubectl replace -f {filename.yml}
+kubectl edit replicaset {rs_name.yml}
+
+kubectl get deployments
+kubectl get all ### show all the resources that have been created.

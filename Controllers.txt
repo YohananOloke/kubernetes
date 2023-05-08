@@ -1,0 +1,98 @@
+## Types of Controllers
+
+1. Replication Controllers:
+Helps run multiple instances of a single pod in a kubernetes cluster, thus creating High Availability.
+it ensures that the specified number of pods are running at all times.
+Helps with Load Balancing and Scaling
+
+2. Replica Set:
+Same as above, but this is the newer way of replication. 
+A replicaset has a selector item in its file, this helps it to manage pods that are not created by the replica set
+
+
+## IMPORTANCE OF LABELS AND SELECTORS
+ Labels help ReplicatSets to filter and know what pods to monitor
+
+## HOW to scale up the replicaSet
+1. update the yml file and increase replica to desired number
+2. run the command "kubectl replace -f {filename.yml}"
+3. Another way to do this is to run "kubectl scale --replicas=X -f {filename.yml}
+
+
+### REPLICATIONCONTROLLER
+
+apiVersion: v1
+kind: ReplicationController
+metadata: 
+    name: myapp-replication
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    template:
+        metadata: 
+            name: myapp-replication
+            labels:
+                app: myapp
+                type: front-end
+        spec:
+            containers:
+            - name: nginx-container
+              image: nginx
+    replicas: 3
+
+
+#### REPLICASET
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata: 
+    name: myapp-replication
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    template:
+        metadata: 
+            name: myapp-replication
+            labels:
+                app: myapp
+                type: front-end
+        spec:
+            containers:
+            - name: nginx-container
+              image: nginx
+    replicas: 3
+    selector: 
+        matchLabels:
+            type: front-end
+
+3. Deployment: 
+This is best for a production environment.
+Helps with rolling updates
+Roll backs
+Undo changes, pause and redo changes.
+
+###
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+    name: myapp-deployment
+    labels:
+        app: myapp
+        type: front-end
+spec:
+    replicas: 3
+    template:
+        metadata:
+            name: myapp-deployment
+            labels:
+                app: myapp
+                type: front-end
+        spec:
+            container:
+            - name: nginx-container
+              image: nginx
+    selector:
+        matchLabels:
+            type: front-end
