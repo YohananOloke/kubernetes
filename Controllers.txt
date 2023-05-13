@@ -96,3 +96,44 @@ spec:
     selector:
         matchLabels:
             type: front-end
+
+
+4. Services
+services enable lose coupling between microservices in our applications
+enable frontend application to be made available to end consumers
+helps communication between frontend and backend applications
+helps in communication to external data sources.
+
+### Types Services
+    a. NodePort: Range (30000 - 32767)
+    b. ClusterIP
+    c. LoadBalancer ( for selected Platform i.e cloud platforms(aws,gcp and azure etc))
+
+## Example ( NodePort)/(LoadBalancer)
+apiVersion: v1
+kind: Service
+metadata:
+    name: myapp-service
+spec:
+    type: NodePort
+    ports:
+      - targetPort: 80
+        port: 80
+        nodePort: 30008
+    selector:
+        app: myapp
+        type: front-end
+
+## Example ( ClusterIP)
+apiVersion: v1
+kind: Service
+metadata:
+    name: back-end
+spec:
+    type: ClusterIP
+    ports:
+        - targetPort: 80
+        port: 80
+    selector:
+        app: myapp
+        type: back-end

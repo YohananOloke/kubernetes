@@ -18,3 +18,9 @@ kubectl edit replicaset {rs_name.yml}
 
 kubectl get deployments
 kubectl get all ### show all the resources that have been created.
+
+## Create a yaml file with templates needed
+kubectl create deployment --image=nginx nginx --dry-run=client -o yaml >nginx-deployment.yaml
+
+kubectl create deployment --image={image_name} name --dry-run=client -o yaml > {file_name.yaml}
+

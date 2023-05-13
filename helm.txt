@@ -1,0 +1,59 @@
+helm repo add {repo_name} {repo_url}
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+helm repo list
+
+helm install {name} {chart_source}
+helm install nginx bitnami/nginx
+
+helm install nginx02 --version 12.0.1 -n default bitnami/nginx
+
+## Use a values file to customize your chart
+helm install nginx03 --values values.yaml bitnami/nginx
+
+##upgrade an existing deployment
+helm upgrade nginx --set service.type=NodePort --set service.port=8080 bitnami/nginx
+helm upgrade nginx03 --values values.yaml bitnami/nginx
+
+## to see your active helm deployments use the below
+helm list
+
+helm unistall nginx
+
+helm get notes {chart_name} ## to display the help message that Helm outputs at the end of a deployment
+helm get values {chart_name}
+helm get values {chart_name} --all
+
+## good place to start troubleshooting 
+helm get manifest {chart_name} ### This shows you the deployment file used in creating the cluster
+
+## helm status during deployments
+pending-install   THe manifest are ready but they werent sent to K8s yet
+deployed          The manifest were sent to k8s and they were accepted
+pending-upgrade   The upgrade are ready but they werent sent to K8s yet
+supersede         When a release is upgraded successfully
+pending-rollback  When roll-back manifest are generated but they werent sent to K8s yet
+uninstalling      When the current(most recent) release is being uninstalled
+uninstalled       if history is retained, the status of the last uninstalled release
+failed            if k8s rejects the manifests supplied by Helm during any operation.
+
+## Helm roll back 
+helm history {chart_name}
+helm rollback {chart_name} {revision_no}
+
+helm uninstall (chart_name) --keep-history
+
+### Tips for installation/Upgrade of Helm
+1. Always autogenerate the release name.
+helm install {repo_name} --genetate-name
+helm install bitnami/nginx --generate-name
+
+2. auto-generate namespace
+helm install nginx -n apps bitnami/nginx --create-namespace
+
+3. Install the release or UPgrade it if it exist. (Using the --install flag)
+helm upgrade --install nginx05 bitnami/nginx
+
+4. Verify that the application is running. ( Using the --wait flag with --timeout flag)
+helm upgrade nginx01 --set image.registry=foobar bitname/nginx --wait (waits for 5mins by default)
+helm upgrade nginx01 --set image.registry=foobar bitname/nginx --wait --timeout 10s
