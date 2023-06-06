@@ -57,3 +57,7 @@ helm upgrade --install nginx05 bitnami/nginx
 4. Verify that the application is running. ( Using the --wait flag with --timeout flag)
 helm upgrade nginx01 --set image.registry=foobar bitname/nginx --wait (waits for 5mins by default)
 helm upgrade nginx01 --set image.registry=foobar bitname/nginx --wait --timeout 10s
+
+
+### Helm Chart creation 101
+

@@ -78,6 +78,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata: 
     name: myapp-deployment
+    namespace: default
     labels:
         app: myapp
         type: front-end
@@ -137,3 +138,35 @@ spec:
     selector:
         app: myapp
         type: back-end
+
+
+## LimitRange CPU and Memory
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+    name: limit range cpu
+spec:
+    limits:
+        - default:
+            cpu: 500m
+          defaultRequest:
+            cpu: 500m
+          max:
+            cpu: 500m
+          min:
+            cpu: 500m
+
+
+## Resource Quota is object created on the namespce level
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+    name: my resource quota
+spec:
+    hard:
+        requests.cpu: 4
+        requests.memory: 4Gi
+        limits.cpu: 10
+        limits.memory: 4Gi

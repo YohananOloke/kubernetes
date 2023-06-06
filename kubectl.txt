@@ -5,6 +5,7 @@ Kubectl run name --image {Image_name}
 ### see your pods
 
 kubectl get pods
+kubectl get pods -o wide
 kubectl create -f {file_name.yml}
 kubectl describe pod {podname}
 kubectl delete pod {podname}
@@ -24,3 +25,10 @@ kubectl create deployment --image=nginx nginx --dry-run=client -o yaml >nginx-de
 
 kubectl create deployment --image={image_name} name --dry-run=client -o yaml > {file_name.yaml}
 
+## Labels and Selectors
+
+
+
+## Node Selector
+label nodes with the command 
+kubectl label node node01 key=value
